@@ -1,6 +1,8 @@
 # logix_nc
 
-I had heard rumblings of a logix based CNC system at teched last year and thought it was a pretty neat idea.  I thought about it for a while and put my own demo version of it together in my free time over the last week.  Note that all of the gcode in the examples I found by googling "example gcode" and similar - I didn't create any of it.  Also note that some of the lines look jagged in the gifs below but that is due to the refresh rate of the FTView ME screen, 
+I had heard rumblings of a logix based CNC system at teched ~~last year~~ many moons ago and thought it was a pretty neat idea.  I thought about it for a while and put my own demo version of it together in my free time over the last week.  Note that all of the gcode in the examples I found by googling "example gcode" and similar - I didn't create any of it.  Also note that some of the lines look jagged in the gifs below but that is due to the refresh rate of the FTView ME screen, 
+
+I did end up getting to look at the rockwell NC code at some point.  It's way more complicated to modify, but it also supports things like using a coordinated servo axis as the spindle to do rigid tapping and such.  If you're looking for a NC solution on logix, reach out to your rockwell rep and ask them about it - then you can decide whether this code or their code is a better fit for your application.
 
 
 gcode6.gif
@@ -27,7 +29,7 @@ The ? operator reads the value to the right of it (which can be calculated by a 
 
 {{http://danomagnum.com/files/Logix_NC/gcode3.gif}}
 
-It handles G00 (rapid), G01 (linear), G02 (cw circle) and G03 (ccw circle).  Although I didn't spend enough time to verify that G02 and G03 are working exactly right, it seems to handles most cases.  G03 and G04 were tricky because once you've got 3 axis coordinate system in logix you can't specify cw or ccw anymore, just "short way round" or "long way round".  I did some math on the xy plane to decide which was was intended and choose appropriately, but something might be off with it.  This should make adding G17, G18, and G19 (circular moves relative to XY, XZ, and YZ planes) easy but I did not bother with them.
+It handles G00 (rapid), G01 (linear), G02 (cw circle) and G03 (ccw circle).  Although I didn't spend enough time to verify that G02 and G03 are working exactly right, it seems to handle most cases correctly.  G03 and G04 were tricky because once you've got 3 axis coordinate system in logix you can't specify cw or ccw anymore, just "short way round" or "long way round".  I did some math on the xy plane to decide which was was intended and choose appropriately, but something might be off with it.  This should make adding G17, G18, and G19 (circular moves relative to XY, XZ, and YZ planes) easy but I did not bother with them.
 
 It handles tool offsets. As selected by a T word from 0-1024.  G43 can be used to change the tool offsets from the program.
 
@@ -48,7 +50,7 @@ N100 G10 P100 X10 Y11 Z12 ; Switch to offset 100 and change its values to X=10, 
 ...
 ```
 
-{{http://danomagnum.com/files/Logix_NC/gcode5.gif}}
+gcode5.gif
 
 It handles parenthesis comments and end of line comments (everything after a ; is ignored)
 
@@ -119,6 +121,3 @@ You could also probably get rid of MDI, though it's size is already relatively s
 A more advanced technique would be to load the gcode program in blocks in real time and have the upload program be constantly running and handshaking with the controller as it runs.  At a minimum, hooks would have to be added for the controller to request specific lines of programs for jumping to work properly.
 
 Ultimately it works pretty well.
-
-You can download all files [[http://danomagnum.com/files/Logix_NC/Logix_NC.tgz|here]].
-Or download individual files [[http://danomagnum.com/files/Logix_NC/|here]].
