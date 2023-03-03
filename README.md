@@ -27,7 +27,7 @@ M#2 reads variable 2 and does M<v2> so if variable 2 = 00, you get a MOO
 It also handles comparisons (<, =, >) and an IF operator (?).  
 The ? operator reads the value to the right of it (which can be calculated by a variable or a constant).  If the value is >0 the rest of the line to the right is executed.  Otherwise it is skipped.  There is an example of this below.
 
-![user interface](http://danomagnum.com/files/Logix_NC/gcode3.gif)
+![heart loop](http://danomagnum.com/files/Logix_NC/gcode3.gif)
 
 It handles G00 (rapid), G01 (linear), G02 (cw circle) and G03 (ccw circle).  Although I didn't spend enough time to verify that G02 and G03 are working exactly right, it seems to handle most cases correctly.  G03 and G04 were tricky because once you've got 3 axis coordinate system in logix you can't specify cw or ccw anymore, just "short way round" or "long way round".  I did some math on the xy plane to decide which was was intended and choose appropriately, but something might be off with it.  This should make adding G17, G18, and G19 (circular moves relative to XY, XZ, and YZ planes) easy but I did not bother with them.
 
@@ -50,7 +50,7 @@ N100 G10 P100 X10 Y11 Z12 ; Switch to offset 100 and change its values to X=10, 
 ...
 ```
 
-gcode5.gif
+![ui](gcode5.gif)
 
 It handles parenthesis comments and end of line comments (everything after a ; is ignored)
 
